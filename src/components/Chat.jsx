@@ -1,16 +1,6 @@
-import { useEffect } from "react";
 import styled from "styled-components";
-import { getAllUsers } from "../services/userService";
 
 const Chat = () => {
-    useEffect(() => {
-        (async () => {
-            const response = await getAllUsers();
-
-            console.log(response);
-        })();
-    }, []);
-
     return <Container></Container>;
 };
 
