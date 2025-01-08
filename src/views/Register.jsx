@@ -1,14 +1,15 @@
 import { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import registerLoginBackground from "../assets/registerLoginBackground.jpg";
+import { createUser } from "../services/userService";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         password: "",
     });
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -19,27 +20,17 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        setLoading(true);
-        setError("");
-
-        try {
-            await axios.post("/api/register", formData);
-        } catch (err) {
-            setError(err.response?.data?.message || "Error creating account");
-        } finally {
-            setLoading(false);
-        }
+        await createUser(formData);
+        navigate("/login");
     };
 
     return (
         <Container>
             <FormContainer>
                 <Title>Create an account</Title>
-                {error && <ErrorMessage>{error}</ErrorMessage>}
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="username">Username</label>
+                    <InputContainer>
+                        <Label htmlFor="username">Username</Label>
                         <Input
                             type="text"
                             id="username"
@@ -48,9 +39,9 @@ const Register = () => {
                             onChange={handleChange}
                             required
                         />
-                    </div>
-                    <div>
-                        <label htmlFor="password">Password</label>
+                    </InputContainer>
+                    <InputContainer>
+                        <Label htmlFor="password">Password</Label>
                         <Input
                             type="password"
                             id="password"
@@ -59,11 +50,10 @@ const Register = () => {
                             onChange={handleChange}
                             required
                         />
-                    </div>
-                    <Button type="submit" disabled={loading}>
-                        {loading ? "Creating Account..." : "Register"}
-                    </Button>
+                    </InputContainer>
+                    <RegisterButton>Continue</RegisterButton>
                 </form>
+                <RedirectToLogin onClick={() => navigate('/login')}>Already have an account?</RedirectToLogin>
             </FormContainer>
         </Container>
     );
@@ -73,55 +63,88 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
+    flex: 1;
+    background-color: #323338;
+    min-height: 100vh;
+    max-height: 100vh;
+    background-image: url(${registerLoginBackground});
+    background-size: cover;
+    background-position: center center;
 `;
 
 const FormContainer = styled.div`
-    background-color: #fff;
+    background-color: #36393f;
     padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 500px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
 `;
 
 const Title = styled.h2`
     text-align: center;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 24px;
+    line-height: 30px;
     margin-bottom: 20px;
 `;
 
+const Label = styled.label`
+    color: #8e9297;
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+`;
+
 const Input = styled.input`
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
     font-size: 16px;
+    height: 40px;
+    padding: 10px;
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+
+    &:hover {
+        border: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
+    &:focus {
+        outline: 1px solid #7289da;
+    }
 `;
 
-const Button = styled.button`
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
+const RegisterButton = styled.button`
     cursor: pointer;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #7289da;
+    font-size: 16px;
+    line-height: 24px;
+    width: 100%;
+    height: 40px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    margin-bottom: 20px;
 
-    &:disabled {
-        background-color: #d3d3d3;
-    }
-
-    &:hover:enabled {
-        background-color: #0056b3;
+    &:hover {
+        background-color: #677bc4;
     }
 `;
 
-const ErrorMessage = styled.p`
-    color: red;
-    text-align: center;
+const RedirectToLogin = styled.div`
     font-size: 14px;
+    color: #7289da;
+    cursor: pointer;
+`;
+
+const InputContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
 `;
 
 export default Register;
