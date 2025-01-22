@@ -1,45 +1,42 @@
-import styled from "styled-components";
-import registerLoginBackground from "../assets/registerLoginBackground.jpg";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setAuthenticatedUserId, setIsAuthenticated } from "../store/slices/mainSlice";
+import styled from "styled-components";
+import { createServer } from "../services/serverService";
+import { useDispatch, useSelector } from "react-redux";
+import { setServers } from "../store/slices/mainSlice";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../axiosInstance";
 
-const Login = () => {
+const CreateServer = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [userId, setUserId] = useState('');
+    const [serverName, setServerName] = useState();
+    const servers = useSelector((state) => state.mainSlice.servers);
 
     const onChange = (e) => {
-        setUserId(e.target.value);
+        setServerName(e.target.value);
     };
 
-    const onSubmit = () => {
-        axiosInstance.defaults.headers.common['User-Id'] = userId
-        localStorage.setItem("userId", userId);
-        dispatch(setIsAuthenticated(true))
-        dispatch(setAuthenticatedUserId(userId))
-        navigate('/')
+    const onSubmit = async () => {
+        const server = await createServer(serverName)
+        dispatch(setServers([...servers, server]));
+        navigate(`/server/${server.id}`)
     }
 
     return (
         <Container>
             <FormContainer>
-                <Title>Welcome Back!</Title>
+                <Title>Create a Server</Title>
                 <InputContainer>
-                    <Label htmlFor="userId">User ID</Label>
+                    <Label htmlFor="serverName">Server name</Label>
                     <Input
                         type="text"
-                        id="userId"
-                        name="userId"
-                        value={userId}
+                        id="serverName"
+                        name="serverName"
+                        value={serverName}
                         onChange={onChange}
                         required
                     />
                 </InputContainer>
                 <RegisterButton onClick={onSubmit}>Continue</RegisterButton>
-                <RedirectToLogin onClick={() => navigate('/register')}>Need an account?</RedirectToLogin>
             </FormContainer>
         </Container>
     );
@@ -53,9 +50,6 @@ const Container = styled.div`
     background-color: #323338;
     min-height: 100vh;
     max-height: 100vh;
-    background-image: url(${registerLoginBackground});
-    background-size: cover;
-    background-position: center center;
 `;
 
 const FormContainer = styled.div`
@@ -121,16 +115,10 @@ const RegisterButton = styled.button`
     }
 `;
 
-const RedirectToLogin = styled.div`
-    font-size: 14px;
-    color: #7289da;
-    cursor: pointer;
-`;
-
 const InputContainer = styled.div`
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
 `;
 
-export default Login;
+export default CreateServer;

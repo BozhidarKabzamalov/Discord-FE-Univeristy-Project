@@ -16,6 +16,7 @@ const Home = () => {
 const Container = styled.div`
     display: flex;
     min-height: 100vh;
+    max-height: 100vh;
 `;
 
 const Main = styled.div`

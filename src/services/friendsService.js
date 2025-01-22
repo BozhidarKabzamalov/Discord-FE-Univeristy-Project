@@ -9,3 +9,13 @@ export const getAllFriendsForUser = async () => {
         console.log(error);
     }
 };
+
+export const addFriend = async (payload) => {
+    try {
+        const { data } = await axiosInstance.post("/friendships", payload);
+
+        return data.data;
+    } catch (error) {
+        console.log(error);
+    }
+};

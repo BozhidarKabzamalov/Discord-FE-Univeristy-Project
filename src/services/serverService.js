@@ -9,3 +9,37 @@ export const getAllJoinedServers = async () => {
         console.log(error);
     }
 };
+
+export const createServer = async (serverName) => {
+    try {
+        const { data } = await axiosInstance.post("/servers", { name: serverName });
+
+        return data.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const deleteServer = async (serverId) => {
+    try {
+        await axiosInstance.delete(`/servers/${serverId}`);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const editServer = async (serverId, payload) => {
+    try {
+        await axiosInstance.put(`/servers/${serverId}`, payload);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const addUserToServer = async (serverId, userId) => {
+    try {
+        await axiosInstance.post(`/servers/${serverId}/memberships/${userId}/add`);
+    } catch (error) {
+        console.log(error);
+    }
+};

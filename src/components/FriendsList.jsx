@@ -25,7 +25,7 @@ const FriendsList = () => {
     }, [dispatch]);
 
     return (
-        <Container>
+        <>
             {friends &&
                 friends.map(({ friendId, friendUsername }) => {
                     return (
@@ -37,11 +37,10 @@ const FriendsList = () => {
                         </Friend>
                     );
                 })}
-        </Container>
+        </>
     );
 };
 
-const Container = styled.div``;
 const Friend = styled.p`
     color: #949ba4;
     font-weight: 600;
