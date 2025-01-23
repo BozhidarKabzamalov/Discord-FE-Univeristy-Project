@@ -2,26 +2,29 @@ import styled from "styled-components";
 import registerLoginBackground from "../assets/registerLoginBackground.jpg";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAuthenticatedUserId, setIsAuthenticated } from "../store/slices/mainSlice";
+import {
+    setAuthenticatedUserId,
+    setIsAuthenticated,
+} from "../store/slices/mainSlice";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../axiosInstance";
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [userId, setUserId] = useState('');
+    const [userId, setUserId] = useState("");
 
     const onChange = (e) => {
         setUserId(e.target.value);
     };
 
     const onSubmit = () => {
-        axiosInstance.defaults.headers.common['User-Id'] = userId
+        axiosInstance.defaults.headers.common["User-Id"] = userId;
         localStorage.setItem("userId", userId);
-        dispatch(setIsAuthenticated(true))
-        dispatch(setAuthenticatedUserId(userId))
-        navigate('/')
-    }
+        dispatch(setIsAuthenticated(true));
+        dispatch(setAuthenticatedUserId(userId));
+        navigate("/");
+    };
 
     return (
         <Container>
@@ -39,7 +42,9 @@ const Login = () => {
                     />
                 </InputContainer>
                 <RegisterButton onClick={onSubmit}>Continue</RegisterButton>
-                <RedirectToLogin onClick={() => navigate('/register')}>Need an account?</RedirectToLogin>
+                <RedirectToLogin onClick={() => navigate("/register")}>
+                    Need an account?
+                </RedirectToLogin>
             </FormContainer>
         </Container>
     );

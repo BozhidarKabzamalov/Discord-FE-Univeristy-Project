@@ -11,23 +11,28 @@ import AddUserToServer from "./components/AddUserToServer.jsx";
 import AddFriend from "./components/AddFriend.jsx";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setAuthenticatedUserId, setIsAuthenticated } from "./store/slices/mainSlice.js";
+import {
+    setAuthenticatedUserId,
+    setIsAuthenticated,
+} from "./store/slices/mainSlice.js";
 import axiosInstance from "./axiosInstance.js";
 
 const App = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const isAuthenticated = useSelector((state) => state.mainSlice.isAuthenticated);
+    const isAuthenticated = useSelector(
+        (state) => state.mainSlice.isAuthenticated
+    );
 
     useEffect(() => {
         const persistedUserId = localStorage.getItem("userId");
 
         if (!persistedUserId || isAuthenticated) return;
 
-        axiosInstance.defaults.headers.common['User-Id'] = persistedUserId
-        dispatch(setIsAuthenticated(true))
+        axiosInstance.defaults.headers.common["User-Id"] = persistedUserId;
+        dispatch(setIsAuthenticated(true));
         dispatch(setAuthenticatedUserId(persistedUserId));
-        navigate('/')
+        navigate("/");
     }, [dispatch, isAuthenticated, navigate]);
 
     return (

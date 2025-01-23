@@ -1,17 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { addUserToServer } from "../services/serverService";
-import { useDispatch, useSelector } from "react-redux";
-import { setServers } from "../store/slices/mainSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserByUsername } from "../services/userService";
 
 const AddUserToServer = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { serverId } = useParams();
-    const [username, setUsername] = useState('');
-    const servers = useSelector((state) => state.mainSlice.servers);
+    const [username, setUsername] = useState("");
 
     const onChange = (e) => {
         setUsername(e.target.value);
@@ -19,9 +15,9 @@ const AddUserToServer = () => {
 
     const onSubmit = async () => {
         const user = await getUserByUsername(username);
-        await addUserToServer(serverId, user.id)
-        navigate(`/server/${serverId}`)
-    }
+        await addUserToServer(serverId, user.id);
+        navigate(`/server/${serverId}`);
+    };
 
     return (
         <Container>

@@ -17,13 +17,13 @@ const EditServer = () => {
     };
 
     const onSubmit = async () => {
-        await editServer(serverId, { name: serverName })
+        await editServer(serverId, { name: serverName });
         const updatedServers = servers.map((server) =>
             server.id == serverId ? { ...server, name: serverName } : server
         );
         dispatch(setServers(updatedServers));
-        navigate(`/server/${serverId}`)
-    }
+        navigate(`/server/${serverId}`);
+    };
 
     return (
         <Container>

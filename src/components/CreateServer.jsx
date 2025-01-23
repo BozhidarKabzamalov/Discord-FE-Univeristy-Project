@@ -16,10 +16,10 @@ const CreateServer = () => {
     };
 
     const onSubmit = async () => {
-        const server = await createServer(serverName)
+        const server = await createServer(serverName);
         dispatch(setServers([...servers, server]));
-        navigate(`/server/${server.id}`)
-    }
+        navigate(`/server/${server.id}`);
+    };
 
     return (
         <Container>

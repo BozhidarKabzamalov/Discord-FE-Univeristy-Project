@@ -26,6 +26,11 @@ export const mainSlice = createSlice({
     },
 });
 
-export const { setIsAuthenticated, setAuthenticatedUserId, setServers, setFriends } = mainSlice.actions;
+export const {
+    setIsAuthenticated,
+    setAuthenticatedUserId,
+    setServers,
+    setFriends,
+} = mainSlice.actions;
 
 export default mainSlice.reducer;

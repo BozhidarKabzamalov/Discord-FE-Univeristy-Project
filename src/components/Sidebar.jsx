@@ -30,7 +30,13 @@ const Sidebar = () => {
                 >
                     Servers
                 </Text>
-                <Text onClick={() => {navigate('/server/create')}}>Create</Text>
+                <Text
+                    onClick={() => {
+                        navigate("/server/create");
+                    }}
+                >
+                    Create
+                </Text>
             </Container>
             <Container>
                 <Text
@@ -40,7 +46,13 @@ const Sidebar = () => {
                 >
                     Friends
                 </Text>
-                <Text onClick={() => {navigate('/friend/add')}}>Add</Text>
+                <Text
+                    onClick={() => {
+                        navigate("/friend/add");
+                    }}
+                >
+                    Add
+                </Text>
             </Container>
             {isServersSelected ? <ServersList /> : <FriendsList />}
             <Logout onClick={logout}>Logout</Logout>

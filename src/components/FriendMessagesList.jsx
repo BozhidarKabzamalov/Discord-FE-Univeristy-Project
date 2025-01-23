@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { getAllFriendMessages } from "../services/messagesService";
-import MessageInput from "./MessageInput";
+import FriendMessageInput from "./FriendMessageInput";
 import Message from "./Message";
 import { useParams } from "react-router-dom";
 
@@ -31,10 +31,10 @@ const FriendMessagesList = () => {
                     );
                 })}
             </MessagesContainer>
-            <MessageInput
-                selectedServerId={friendId}
-                serverMessages={friendMessages}
-                setServerMessages={setFriendMessages}
+            <FriendMessageInput
+                selectedFriendId={friendId}
+                friendMessages={friendMessages}
+                setFriendMessages={setFriendMessages}
             />
         </StyledMessagesList>
     );

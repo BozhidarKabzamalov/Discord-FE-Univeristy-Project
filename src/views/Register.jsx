@@ -53,7 +53,9 @@ const Register = () => {
                     </InputContainer>
                     <RegisterButton>Continue</RegisterButton>
                 </form>
-                <RedirectToLogin onClick={() => navigate('/login')}>Already have an account?</RedirectToLogin>
+                <RedirectToLogin onClick={() => navigate("/login")}>
+                    Already have an account?
+                </RedirectToLogin>
             </FormContainer>
         </Container>
     );

@@ -19,9 +19,7 @@ export const createUser = async (payload) => {
 
 export const getUserByUsername = async (username) => {
     try {
-        const { data } = await axiosInstance.get(
-            `/users/username/${username}`
-        );
+        const { data } = await axiosInstance.get(`/users/username/${username}`);
 
         return data.data;
     } catch (error) {

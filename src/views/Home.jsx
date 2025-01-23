@@ -24,6 +24,6 @@ const Main = styled.div`
     background-color: #323338;
     min-height: 100vh;
     max-height: 100vh;
-`
+`;
 
 export default Home;

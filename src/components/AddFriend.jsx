@@ -9,7 +9,7 @@ import { setFriends } from "../store/slices/mainSlice";
 const AddFriend = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState("");
     const friends = useSelector((state) => state.mainSlice.friends);
 
     const onChange = (e) => {
@@ -18,10 +18,10 @@ const AddFriend = () => {
 
     const onSubmit = async () => {
         const user = await getUserByUsername(username);
-        const friend = await addFriend({userId: 2, friendId: user.id})
+        const friend = await addFriend({ userId: 2, friendId: user.id });
         dispatch(setFriends([...friends, friend]));
         navigate(`/friend/${friend.friendId}`);
-    }
+    };
 
     return (
         <Container>

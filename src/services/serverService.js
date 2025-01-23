@@ -12,7 +12,9 @@ export const getAllJoinedServers = async () => {
 
 export const createServer = async (serverName) => {
     try {
-        const { data } = await axiosInstance.post("/servers", { name: serverName });
+        const { data } = await axiosInstance.post("/servers", {
+            name: serverName,
+        });
 
         return data.data;
     } catch (error) {
@@ -38,7 +40,31 @@ export const editServer = async (serverId, payload) => {
 
 export const addUserToServer = async (serverId, userId) => {
     try {
-        await axiosInstance.post(`/servers/${serverId}/memberships/${userId}/add`);
+        await axiosInstance.post(
+            `/servers/${serverId}/memberships/${userId}/add`
+        );
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getAllServerMembers = async (serverId) => {
+    try {
+        const { data } = await axiosInstance.get(
+            `/servers/${serverId}/members`
+        );
+
+        return data.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const promoteUserToAdmin = async (serverId, memberId) => {
+    try {
+        await axiosInstance.put(
+            `/servers/${serverId}/memberships/${memberId}/promote`
+        );
     } catch (error) {
         console.log(error);
     }

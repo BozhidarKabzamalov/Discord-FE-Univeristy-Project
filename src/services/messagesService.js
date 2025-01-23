@@ -24,10 +24,20 @@ export const getAllFriendMessages = async (friendId) => {
     }
 };
 
-export const sendMessage = async (payload) => {
+export const sendServerMessage = async (payload) => {
     try {
         const { data } = await axiosInstance.post(`/servers/messages`, payload);
-        
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const sendFriendMessage = async (payload) => {
+    try {
+        const { data } = await axiosInstance.post(`/messages`, payload);
+
         return data;
     } catch (error) {
         console.log(error);
