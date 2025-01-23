@@ -17,6 +17,8 @@ const ServerMessageInput = ({
     };
 
     const onSubmit = async () => {
+        if (message.trim() === "") return;
+
         const payload = {
             content: message,
             senderId: 2,

@@ -48,6 +48,16 @@ export const addUserToServer = async (serverId, userId) => {
     }
 };
 
+export const removeUserFromServer = async (serverId, userId) => {
+    try {
+        await axiosInstance.delete(
+            `/servers/${serverId}/memberships/${userId}/remove`
+        );
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const getAllServerMembers = async (serverId) => {
     try {
         const { data } = await axiosInstance.get(

@@ -9,6 +9,7 @@ import {
     deleteServer,
     getAllServerMembers,
     promoteUserToAdmin,
+    removeUserFromServer,
 } from "../services/serverService";
 import { setServers } from "../store/slices/mainSlice";
 
@@ -77,6 +78,15 @@ const ServerMessagesList = () => {
         setServerMembers(updatedServerMembers);
     };
 
+    const onRemoveServerMember = async (memberId) => {
+        await removeUserFromServer(serverId, memberId);
+        const updatedServerMembers = serverMembers.filter((serverMember) => {
+            return serverMember.userId != memberId;
+        });
+
+        setServerMembers(updatedServerMembers);
+    };
+
     useEffect(() => {
         (async () => {
             if (!serverId) return;
@@ -129,9 +139,22 @@ const ServerMessagesList = () => {
                         {serverMembers.map((serverMember) => {
                             const isServerMemberGuest =
                                 serverMember.role === "guest";
+                            const isServerMemberOwner =
+                                serverMember.role === "owner";
                             return (
                                 <ServerMember key={serverMember.id}>
                                     {serverMember.username}
+                                    {!isServerMemberOwner && (
+                                        <Remove
+                                            onClick={() =>
+                                                onRemoveServerMember(
+                                                    serverMember.userId
+                                                )
+                                            }
+                                        >
+                                            X
+                                        </Remove>
+                                    )}
                                     {isServerMemberGuest && isOwner && (
                                         <Promote
                                             onClick={() =>
@@ -187,6 +210,9 @@ const AddUser = styled.div`
 `;
 
 const MessagesContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     height: calc(100vh - 165px);
     max-height: calc(100vh - 165px);
     overflow: auto;
@@ -220,8 +246,13 @@ const ServerMember = styled.div`
 const Promote = styled.div`
     color: #949ba4;
     font-weight: 600;
-    margin-bottom: 20px;
-    margin-left: 20px;
+    margin-left: 10px;
+`;
+
+const Remove = styled.div`
+    color: #949ba4;
+    font-weight: 600;
+    margin-left: 10px;
 `;
 
 export default ServerMessagesList;

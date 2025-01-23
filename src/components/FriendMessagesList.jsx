@@ -46,9 +46,16 @@ const StyledMessagesList = styled.div`
     min-height: 100vh;
     max-height: 100vh;
     padding: 20px;
-    overflow-y: auto;
+    overflow: auto;
 `;
 
-const MessagesContainer = styled.div``;
+const MessagesContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: calc(100vh - 95px);
+    max-height: calc(100vh - 95px);
+    overflow: auto;
+`;
 
 export default FriendMessagesList;
